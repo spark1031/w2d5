@@ -9,15 +9,34 @@ class HashMap
   end
 
   def include?(key)
+    hashed_key = key.hash 
+    the_bucket = hashed_key % @store.length
+    the_list = @store[the_bucket] 
+    if the_list.include?(key)
+      return true 
+    else
+      return false
+    end
   end
 
   def set(key, val)
+    the_bucket = bucket(key)
+    the_list = @store[the_bucket] 
+    if the_list.include?(key)
+      the_list.update(key, val)
+    else
+      the_list.append(key, val) 
+    end
   end
 
   def get(key)
+    the_bucket = bucket(key)
+    the_list = @store[the_bucket] 
+    the_list.get(key)
   end
 
   def delete(key)
+    
   end
 
   def each
@@ -45,5 +64,7 @@ class HashMap
 
   def bucket(key)
     # optional but useful; return the bucket corresponding to `key`
+    hashed_key = key.hash 
+    hashed_key % @store.length
   end
 end
